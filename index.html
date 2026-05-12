@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scam Detector</title>
+</head>
+<body style="text-align:center; margin-top:100px;">
+
+    <h2>🚨 Scam Detector</h2>
+
+    <input id="msg" placeholder="Enter message" style="width:300px;">
+    <br><br>
+
+    <button onclick="check()">Analyze</button>
+
+    <h3 id="result"></h3>
+
+    <script>
+        function check(){
+            let msg = document.getElementById("msg").value;
+
+            fetch("http://127.0.0.1:5000/analyze", {
+                method: "POST",
+                headers: {"Content-Type":"application/json"},
+                body: JSON.stringify({message: msg})
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("result").innerText =
+                    "Scam: " + data.scam + " | Score: " + data.score;
+            });
+        }
+    </script>
+
+</body>
+</html>
